@@ -8,3 +8,5 @@ describe('template spec', () => {
     cy.get('.component-display').first().should('have.text', '6')
   })
 })
+
+//PRUEBA DE MACIAS
