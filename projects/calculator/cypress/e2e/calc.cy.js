@@ -7,4 +7,21 @@ describe('template spec', () => {
     cy.contains('6').click()
     cy.get('.component-display').first().should('have.text', '6')
   })
+
+  it('passes', () => {
+    cy.visit('http://localhost:3000/')
+    cy.contains('AC').click()
+    cy.contains('4').click()
+    cy.contains('0').click()
+    cy.contains('%').click()
+    cy.get('.component-display').first().should('have.text', '0.4')
+  })
+
+  it('passes', () => {
+    cy.visit('http://localhost:3000/')
+    cy.contains('AC').click()
+    cy.contains('7').click()
+    cy.contains('%').click()
+    cy.get('.component-display').first().should('have.text', '0.07')
+  })
 })
