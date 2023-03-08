@@ -1,3 +1,4 @@
+import Big from "big.js"
 
 describe('template spec', () => {
   it('passes', () => {
@@ -45,7 +46,8 @@ describe('Prueba de numeros random', () => {
   it('passes', () => {
     var num = Math.floor((Math.random() * 50) + 1)
     var porcentaje = Math.floor((Math.random() * 100) + 1)
-    var resultado = num * (porcentaje / 100)
+
+    var resultado = Big(num).times(Big(porcentaje).div(100)).toString()
 
     cy.visit('http://localhost:3000/')
     cy.contains('AC').click()
@@ -58,23 +60,6 @@ describe('Prueba de numeros random', () => {
     cy.get('.component-button-panel').contains(num%10).click()
     cy.contains('=').click()
     cy.get('.component-display').first().should('have.text', resultado)
-    
-    /*
-    cy.get('[name=${num%10}]').click()
-    cy.get('[name="(num/10)%10"]').click()
-    cy.contains('x').click()
-    cy.get('[name="porcentaje%10"]').click()
-    cy.get('[name="(porcentaje/10)%10"]').click()
-    cy.get('[name="(porcentaje/100)%10"]').click()
-    cy.contains('%').click()
-    cy.contains('=').click()
-
-
-
-    cy.contains((num/10)%10).click()
-    cy.contains(porcentaje%10).click()
-    cy.contains((porcentaje/10)%10).click()
-    cy.contains((porcentaje/100)%10).click()*/
   })
 })
 
