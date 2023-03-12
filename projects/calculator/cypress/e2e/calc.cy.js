@@ -1,4 +1,5 @@
 describe('template spec', () => {
+
   it('passes', () => {
     cy.visit('http://localhost:3000/')
     cy.contains('AC').click()
@@ -7,4 +8,5 @@ describe('template spec', () => {
     cy.contains('6').click()
     cy.get('.component-display').first().should('have.text', '6')
   })
+
 })
