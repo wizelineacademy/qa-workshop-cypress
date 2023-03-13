@@ -1,5 +1,5 @@
-describe('template spec', () => {
-  it('passes', () => {
+describe('Test Porcentaje Manual', () => {
+  it('Pasa', () => {
     cy.visit('http://localhost:3000/')
     cy.contains('AC').click()
     cy.contains('2').click()
