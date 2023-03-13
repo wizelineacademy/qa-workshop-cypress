@@ -41,7 +41,6 @@ describe('template spec', () => {
     cy.get('.component-display').first().should('have.text', '-0.22')
   })
 
-
   it('porcentaje con números decimales', () => {
     cy.get('.component-button-panel').contains('8').click()
     cy.get('.component-button-panel').contains('.').click()
@@ -58,10 +57,10 @@ describe('template spec', () => {
     cy.contains('%').click()
     cy.get('.component-display').first().should('have.text', '-0.082')
   })
-
-  /*
+  
   //La prueba falla. No se puede sacar el porcentaje de un valor después de haber
   //realizado alguna otra operación(+ - / x)
+  /*
   it('porcentaje después de una resta (LA PRUEBA FALLA)', () => {
     cy.get('.component-button-panel').contains('9').click()
     //Se hace click en el boton de (-) para hacer la resta (no confundir con cambio de signo)
@@ -102,4 +101,61 @@ describe('template spec', () => {
     cy.contains('%').click()
     cy.get('.component-display').first().should('have.text', '0.0007')
   })
+
+  //Prueba que regresa un resultado falso
+  it('prueba resultado falso', () => {
+    cy.get('.component-button-panel').contains('5').click()
+    cy.get('.component-button-panel').contains('0').click()
+    cy.contains('%').click()
+    cy.get('.component-display').first().should('have.text', '0.5')
+    cy.get('.component-button.orange').contains('x').click()
+    cy.get('.component-button-panel').contains('3').click()
+    cy.get('.component-button-panel').contains('2').click()
+    cy.get('.component-button-panel').contains('0').click()
+    cy.get('.component-button-panel').contains('=').click()
+    cy.get('.component-display').first().should('not.equal', '300')
+  })
+  
+  it('Regla de 3 ÷', () => {
+    let primerOperando = Math.floor(Math.random() * 50) + 1;
+    let operandoPorcentual = Math.floor(Math.random() * 100) + 1;
+    let reglaDeTres = (primerOperando * operandoPorcentual) / 100;
+
+    for (let i = 0; i < primerOperando.toString().length; i++) {
+      cy.get(".component-button-panel").contains(primerOperando.toString()[i]).click();
+    }
+    cy.get('.component-button.orange').contains('x').click()
+    for (let i = 0; i < operandoPorcentual.toString().length; i++) {
+      cy.get(".component-button-panel").contains(operandoPorcentual.toString()[i]).click();
+    }
+    cy.get('.component-button-panel').contains('=').click()
+    cy.get('.component-button.orange').contains('÷').click()
+    cy.get('.component-button-panel').contains('1').click()
+    cy.get('.component-button-panel').contains('0').click()
+    cy.get('.component-button-panel').contains('0').click()
+    cy.get('.component-button-panel').contains('=').click()
+    cy.get('.component-display').first().should('have.text', reglaDeTres)
+  })
+
+  //La prueba falla. Como lo vimos anteriormente, no es posible sacar el porcentaje después de 
+  //hacer una operación como multiplicación
+  /*
+  it('Regla de 3 %', () => {
+    let primerOperando = Math.floor(Math.random() * 50) + 1;
+    let operandoPorcentual = Math.floor(Math.random() * 100) + 1;
+    let reglaDeTres = (primerOperando * operandoPorcentual) / 100;
+
+    for (let i = 0; i < primerOperando.toString().length; i++) {
+      cy.get(".component-button-panel").contains(primerOperando.toString()[i]).click();
+    }
+    cy.get('.component-button.orange').contains('x').click()
+    for (let i = 0; i < operandoPorcentual.toString().length; i++) {
+      cy.get(".component-button-panel").contains(operandoPorcentual.toString()[i]).click();
+    }
+    cy.get('.component-button-panel').contains('=').click()
+    cy.contains("%").click();
+    cy.get('.component-button-panel').contains('=').click()
+    cy.get('.component-display').first().should('have.text', reglaDeTres)
+  })
+  */
 })
